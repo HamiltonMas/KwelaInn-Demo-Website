@@ -1,0 +1,363 @@
+/* ============================================
+   KWELA INN — CINEMATIC GLOBAL STYLES
+   ============================================ */
+
+:root {
+  --cin-primary: #0d9488;
+  --cin-primary-dark: #0f766e;
+  --cin-accent: #14b8a6;
+  --cin-gold: #fbbf24;
+  --cin-dark: #0f172a;
+  --cin-ink: #1e293b;
+  --cin-muted: #64748b;
+  --cin-glow: 0 0 40px rgba(13, 148, 136, 0.35);
+  --cin-glow-gold: 0 0 40px rgba(251, 191, 36, 0.35);
+  --cin-ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ---------- Cinematic Loading Screen ---------- */
+.cin-loader {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle at center, #0d9488 0%, #0f172a 70%);
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 24px;
+  transition:
+    opacity 0.8s var(--cin-ease),
+    visibility 0.8s;
+}
+.cin-loader.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+.cin-loader-logo {
+  font-size: 3rem;
+  font-weight: 800;
+  color: white;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  animation: cinLogoIn 1.2s var(--cin-ease) forwards;
+  opacity: 0;
+  text-shadow: 0 0 30px rgba(20, 184, 166, 0.8);
+}
+.cin-loader-bar {
+  width: 220px;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 3px;
+  overflow: hidden;
+  position: relative;
+}
+.cin-loader-bar::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    #14b8a6,
+    #fbbf24,
+    transparent
+  );
+  animation: cinBar 1.6s linear infinite;
+}
+@keyframes cinLogoIn {
+  0% {
+    opacity: 0;
+    transform: translateY(30px) scale(0.9);
+    filter: blur(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+@keyframes cinBar {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* ---------- Animated Gradient Text ---------- */
+.cin-grad-text {
+  background: linear-gradient(120deg, #0d9488, #14b8a6, #fbbf24, #0d9488);
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: cinGradMove 6s ease infinite;
+}
+@keyframes cinGradMove {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+/* ---------- Glowing Buttons ---------- */
+.cin-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 14px 32px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 1rem;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  text-decoration: none;
+  border: none;
+  overflow: hidden;
+  transition:
+    transform 0.4s var(--cin-ease),
+    box-shadow 0.4s var(--cin-ease);
+  isolation: isolate;
+}
+.cin-btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    120deg,
+    transparent,
+    rgba(255, 255, 255, 0.35),
+    transparent
+  );
+  transform: translateX(-100%);
+  transition: transform 0.7s var(--cin-ease);
+  z-index: 1;
+}
+.cin-btn:hover::before {
+  transform: translateX(100%);
+}
+.cin-btn:hover {
+  transform: translateY(-3px) scale(1.02);
+}
+.cin-btn-primary {
+  background: linear-gradient(135deg, #0d9488, #14b8a6);
+  color: white;
+  box-shadow:
+    0 10px 30px rgba(13, 148, 136, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+.cin-btn-primary:hover {
+  box-shadow:
+    0 20px 50px rgba(13, 148, 136, 0.55),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+.cin-btn-ghost {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  color: white;
+  border: 1.5px solid rgba(255, 255, 255, 0.4);
+}
+.cin-btn-ghost:hover {
+  background: rgba(255, 255, 255, 0.18);
+  border-color: white;
+  box-shadow: 0 15px 40px rgba(255, 255, 255, 0.2);
+}
+.cin-btn-gold {
+  background: linear-gradient(135deg, #fbbf24, #f59e0b);
+  color: #1e293b;
+  box-shadow: 0 10px 30px rgba(251, 191, 36, 0.35);
+}
+.cin-btn-gold:hover {
+  box-shadow: 0 20px 50px rgba(251, 191, 36, 0.5);
+}
+
+/* ---------- Scroll Reveal ---------- */
+.cin-reveal {
+  opacity: 0;
+  transform: translateY(60px);
+  transition:
+    opacity 1s var(--cin-ease),
+    transform 1s var(--cin-ease);
+  will-change: opacity, transform;
+}
+.cin-reveal.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+.cin-reveal-left {
+  opacity: 0;
+  transform: translateX(-80px);
+  transition:
+    opacity 1s var(--cin-ease),
+    transform 1s var(--cin-ease);
+}
+.cin-reveal-left.in-view {
+  opacity: 1;
+  transform: translateX(0);
+}
+.cin-reveal-right {
+  opacity: 0;
+  transform: translateX(80px);
+  transition:
+    opacity 1s var(--cin-ease),
+    transform 1s var(--cin-ease);
+}
+.cin-reveal-right.in-view {
+  opacity: 1;
+  transform: translateX(0);
+}
+.cin-reveal-zoom {
+  opacity: 0;
+  transform: scale(0.85);
+  transition:
+    opacity 1s var(--cin-ease),
+    transform 1s var(--cin-ease);
+}
+.cin-reveal-zoom.in-view {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* ---------- Ken Burns for images ---------- */
+.cin-kenburns {
+  animation: cinKenBurns 20s ease-in-out infinite alternate;
+}
+@keyframes cinKenBurns {
+  0% {
+    transform: scale(1) translate(0, 0);
+  }
+  100% {
+    transform: scale(1.15) translate(-2%, -2%);
+  }
+}
+
+/* ---------- Floating particles background ---------- */
+.cin-particles {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 1;
+}
+.cin-particle {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(20, 184, 166, 0.8) 0%,
+    rgba(20, 184, 166, 0) 70%
+  );
+  animation: cinFloat linear infinite;
+  opacity: 0.5;
+}
+@keyframes cinFloat {
+  0% {
+    transform: translateY(100vh) scale(0.5);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.7;
+  }
+  90% {
+    opacity: 0.7;
+  }
+  100% {
+    transform: translateY(-100px) scale(1.3);
+    opacity: 0;
+  }
+}
+
+/* ---------- Parallax / tilt card ---------- */
+.cin-tilt {
+  transition: transform 0.5s var(--cin-ease);
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+.cin-tilt:hover {
+  transform: perspective(1000px) rotateX(4deg) rotateY(-4deg) translateY(-8px);
+}
+
+/* ---------- Glass card ---------- */
+.cin-glass {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 24px;
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+.cin-glass-light {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  border-radius: 24px;
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+/* ---------- Section fade ---------- */
+.cin-section {
+  position: relative;
+  overflow: hidden;
+}
+
+/* ---------- Cursor glow (desktop only) ---------- */
+.cin-cursor {
+  position: fixed;
+  width: 400px;
+  height: 400px;
+  border-radius: 50%;
+  pointer-events: none;
+  background: radial-gradient(
+    circle,
+    rgba(20, 184, 166, 0.12) 0%,
+    rgba(20, 184, 166, 0) 65%
+  );
+  transform: translate(-50%, -50%);
+  z-index: 9998;
+  mix-blend-mode: screen;
+  transition: opacity 0.3s;
+  display: none;
+}
+@media (hover: hover) and (pointer: fine) {
+  .cin-cursor {
+    display: block;
+  }
+}
+
+/* ---------- Scroll progress bar ---------- */
+.cin-scroll-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #0d9488, #14b8a6, #fbbf24);
+  z-index: 9999;
+  width: 0%;
+  box-shadow: 0 0 15px rgba(20, 184, 166, 0.6);
+  transition: width 0.1s linear;
+}
+
+/* ---------- Reduce motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
